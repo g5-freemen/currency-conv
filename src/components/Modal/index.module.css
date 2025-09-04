@@ -1,0 +1,19 @@
+.layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #00000080;
+  display: flex;
+  justify-content: center;
+  align-items: safe center;
+}
+
+.modal {
+  min-width: 440px;
+  min-height: 439px;
+  border-radius: 12px;
+  padding: 16px;
+  background: white;
+}

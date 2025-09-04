@@ -1,0 +1,17 @@
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tag {
+  font-weight: 600;
+  color: #008236 !important;
+  user-select: none;
+}
+
+.status {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cgrey);
+}

@@ -4,13 +4,7 @@ import { version } from '../../package.json';
 
 export const APP_VERSION = version;
 
-export const themeConfig = {
-  token: {
-    colorPrimary: '#003eb3',
-    colorSuccess: '#389e0d',
-    colorError: '#cf1322',
-  },
-};
+export const URL_API = import.meta.env.VITE_API_BASE || 'https://api.vatcomply.com/rates';
 
 export const toastConfig: ToastContainerProps = {
   position: 'top-right',

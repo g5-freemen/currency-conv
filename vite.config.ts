@@ -1,5 +1,7 @@
 import react from '@vitejs/plugin-react-swc';
 
+import svgr from 'vite-plugin-svgr';
+
 import { defineConfig } from 'vite';
 
 import path from 'node:path';
@@ -21,7 +23,7 @@ function renderChunks() {
 }
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), svgr()],
   preview: {
     port: 3000,
     host: true,

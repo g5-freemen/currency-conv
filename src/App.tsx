@@ -7,13 +7,11 @@ import { toastConfig } from './utils/consts';
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="p-4 w-full min-h-screen">
-        <Routes>
-          {routes.map(({ path, element }) => (
-            <Route key={path} path={path} element={element} />
-          ))}
-        </Routes>
-      </div>
+      <Routes>
+        {routes.map(({ path, element }) => (
+          <Route key={path} path={path} element={element} />
+        ))}
+      </Routes>
       <ToastContainer {...toastConfig} />
     </BrowserRouter>
   );

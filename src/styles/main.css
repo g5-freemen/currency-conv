@@ -1,6 +1,19 @@
+@import 'reset.css';
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
+
+:root {
+  --cgrey: #737373;
+  --cblue: #1447e6;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
+}
+
+body * {
+  font-family: 'Inter', sans-serif;
 }
 
 ::-webkit-scrollbar-track {
