@@ -54,6 +54,7 @@
 }
 
 .sidebar {
+  user-select: none;
 }
 
 .sectionTitle {

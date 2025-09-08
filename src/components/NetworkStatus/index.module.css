@@ -11,7 +11,9 @@
 }
 
 .status {
+  min-width: 224px;
   font-size: 12px;
   font-weight: 500;
   color: var(--cgrey);
+  text-align: center;
 }

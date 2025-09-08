@@ -11,3 +11,7 @@
   color: #1447e6;
   cursor: pointer;
 }
+
+.button:disabled {
+  opacity: 0.5;
+}

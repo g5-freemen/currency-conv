@@ -4,7 +4,7 @@ import { version } from '../../package.json';
 
 export const APP_VERSION = version;
 
-export const URL_API = import.meta.env.VITE_API_BASE || 'https://api.vatcomply.com/rates';
+export const URL_API = import.meta.env.VITE_API_BASE || 'https://api.vatcomply.com';
 
 export const toastConfig: ToastContainerProps = {
   position: 'top-right',
@@ -30,3 +30,7 @@ export const btnProps = {
     }
   },
 };
+
+export const CACHE_TTL_MS = 300_000; // 5 minutes
+
+export const RATES_LS_KEY = 'rates';

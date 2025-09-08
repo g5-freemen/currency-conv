@@ -1,12 +1,15 @@
 import { NetworkStatus } from '@/components/NetworkStatus';
 import RefreshIcon from '@/assets/icons/refresh.svg?react';
 import { Button } from '@/components/Button';
-
-import css from './index.module.css';
 import { Input } from '@/components/Input';
 import { Currencies } from '@/components/Currencies';
+import { useRates } from '@/api/hooks/useRates';
+
+import css from './index.module.css';
 
 export default function ConverterPage() {
+  const { isBusy, refetch: refetchRates } = useRates();
+
   return (
     <div className={css.page}>
       <header className={css.header}>
@@ -16,7 +19,12 @@ export default function ConverterPage() {
 
       <section className={css.statusBar} aria-label="Network status and actions">
         <NetworkStatus />
-        <Button icon={<RefreshIcon />} aria-label="Refresh exchange rates">
+        <Button
+          icon={<RefreshIcon />}
+          aria-label="Refresh exchange rates"
+          onClick={() => refetchRates()}
+          loading={isBusy}
+        >
           Refresh rates
         </Button>
       </section>
