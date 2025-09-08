@@ -11,8 +11,10 @@ import { useConverter } from '@/hooks/useConverter';
 import { LAST_AMOUNT_LS_KEY, LAST_PAIR_LS_KEY, REFRESH_COOLDOWN_MS } from '@/utils/consts';
 import css from './index.module.css';
 import { readPair, sanitizeAmount } from './utils';
+import { useIsOnline } from '@/hooks/useIsOnline';
 
 export default function ConverterPage() {
+  const { isOnline } = useIsOnline();
   const { isBusy, refetch: refetchRates, data, isError } = useRates();
 
   const [amountRaw, setAmountRaw] = useState<string>(() => localStorage.getItem(LAST_AMOUNT_LS_KEY) || '1');
@@ -39,9 +41,6 @@ export default function ConverterPage() {
 
   const { rate, inverse } = useConverter(pair.from, pair.to, data);
 
-  console.log('rate=', rate);
-  console.log('inverse=', inverse);
-
   const lastClickAtRef = useRef<number>(0);
   const safeRefresh = useCallback(() => {
     const now = Date.now();
@@ -49,6 +48,17 @@ export default function ConverterPage() {
     lastClickAtRef.current = now;
     refetchRates();
   }, [isBusy, refetchRates]);
+
+  const errorMsg = useMemo(() => {
+    let msg = '';
+    if (isError && !isOnline) {
+      msg = 'Failed to load rates. Check your connection and try again.';
+    }
+    if (rate == null) {
+      msg = 'Unknown currency code or rates missing.';
+    }
+    return msg;
+  }, [isError, isOnline]);
 
   return (
     <div className={css.page}>
@@ -71,7 +81,15 @@ export default function ConverterPage() {
         </section>
 
         <aside className={`${css.card} ${css.sidebar}`} aria-labelledby="rates-heading">
-          <ConversionResult />
+          <ConversionResult
+            loading={isBusy}
+            amount={amount}
+            from={pair.from}
+            to={pair.to}
+            rate={rate}
+            inverse={inverse}
+            error={errorMsg}
+          />
         </aside>
       </main>
     </div>
