@@ -4,11 +4,12 @@ import RefreshIcon from '@/assets/icons/refresh.svg?react';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { Currencies } from '@/components/Currencies';
+import { ConversionResult } from '@/components/ConversionResult';
 import { useRates } from '@/api/hooks/useRates';
+import { useDebounce } from '@/hooks/useDebounce';
 import { useConverter } from '@/hooks/useConverter';
 import { LAST_AMOUNT_LS_KEY, LAST_PAIR_LS_KEY, REFRESH_COOLDOWN_MS } from '@/utils/consts';
 import css from './index.module.css';
-import useDebounce from '@/hooks/useDebounce';
 import { readPair, sanitizeAmount } from './utils';
 
 export default function ConverterPage() {
@@ -35,6 +36,11 @@ export default function ConverterPage() {
     setAmountRaw(next);
     localStorage.setItem(LAST_AMOUNT_LS_KEY, next);
   };
+
+  const { rate, inverse } = useConverter(pair.from, pair.to, data);
+
+  console.log('rate=', rate);
+  console.log('inverse=', inverse);
 
   const lastClickAtRef = useRef<number>(0);
   const safeRefresh = useCallback(() => {
@@ -65,7 +71,7 @@ export default function ConverterPage() {
         </section>
 
         <aside className={`${css.card} ${css.sidebar}`} aria-labelledby="rates-heading">
-          333
+          <ConversionResult />
         </aside>
       </main>
     </div>
