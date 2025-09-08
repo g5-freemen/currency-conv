@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .label {
@@ -20,4 +21,16 @@
 
 .error {
   color: #c00;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 16px;
+}
+
+.inputIcon {
+  padding-left: 36px !important;
+  text-align: left;
 }
