@@ -32,5 +32,8 @@ export const btnProps = {
 };
 
 export const CACHE_TTL_MS = 300_000; // 5 minutes
+export const REFRESH_COOLDOWN_MS = 1500;
 
 export const RATES_LS_KEY = 'rates';
+export const LAST_PAIR_LS_KEY = 'last_pair';
+export const LAST_AMOUNT_LS_KEY = 'last_amount';

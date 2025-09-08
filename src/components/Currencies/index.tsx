@@ -7,7 +7,13 @@ import { CurrencyModal } from '@/components/CurrencyModal';
 
 type ActiveSide = 'from' | 'to' | null;
 
-export const Currencies = () => {
+interface Props {
+  from: string;
+  to: string;
+  onChange: (p: { from: string; to: string }) => void;
+}
+
+export const Currencies = ({ from, to, onChange }: Props) => {
   const { data, isBusy } = useRates();
 
   const allCodes = useMemo(() => {
@@ -17,23 +23,18 @@ export const Currencies = () => {
     return res;
   }, [data]);
 
-  const [from, setFrom] = useState<string>('USD');
-  const [to, setTo] = useState<string>('EUR');
   const [active, setActive] = useState<ActiveSide>(null);
-
   const openFrom = () => setActive('from');
   const openTo = () => setActive('to');
   const onClose = () => setActive(null);
 
-  const handleSelect = (side: ActiveSide, code: string) => {
-    if (side === 'from') setFrom(code);
-    if (side === 'to') setTo(code);
+  const handleSelect = (side: 'from' | 'to', code: string) => {
+    onChange(side === 'from' ? { from: code, to } : { from, to: code });
   };
 
   const handleSwap = () => {
     if (isBusy) return;
-    setFrom(to);
-    setTo(from);
+    onChange({ from: to, to: from });
   };
 
   return (

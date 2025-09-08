@@ -1,14 +1,48 @@
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { NetworkStatus } from '@/components/NetworkStatus';
 import RefreshIcon from '@/assets/icons/refresh.svg?react';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { Currencies } from '@/components/Currencies';
 import { useRates } from '@/api/hooks/useRates';
-
+import { useConverter } from '@/hooks/useConverter';
+import { LAST_AMOUNT_LS_KEY, LAST_PAIR_LS_KEY, REFRESH_COOLDOWN_MS } from '@/utils/consts';
 import css from './index.module.css';
+import useDebounce from '@/hooks/useDebounce';
+import { readPair, sanitizeAmount } from './utils';
 
 export default function ConverterPage() {
-  const { isBusy, refetch: refetchRates } = useRates();
+  const { isBusy, refetch: refetchRates, data, isError } = useRates();
+
+  const [amountRaw, setAmountRaw] = useState<string>(() => localStorage.getItem(LAST_AMOUNT_LS_KEY) || '1');
+  const amountNumber = useMemo(() => {
+    const v = +sanitizeAmount(amountRaw);
+    return Number.isFinite(v) ? v : null;
+  }, [amountRaw]);
+
+  const amount = useDebounce(amountNumber, 250);
+
+  const initialPair = readPair() || { from: 'USD', to: 'EUR' };
+  const [pair, setPair] = useState<{ from: string; to: string }>(initialPair);
+
+  const onPairChange = (p: { from: string; to: string }) => {
+    setPair(p);
+    localStorage.setItem(LAST_PAIR_LS_KEY, JSON.stringify(p));
+  };
+
+  const onAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const next = sanitizeAmount(e.currentTarget.value);
+    setAmountRaw(next);
+    localStorage.setItem(LAST_AMOUNT_LS_KEY, next);
+  };
+
+  const lastClickAtRef = useRef<number>(0);
+  const safeRefresh = useCallback(() => {
+    const now = Date.now();
+    if (now - lastClickAtRef.current < REFRESH_COOLDOWN_MS || isBusy) return;
+    lastClickAtRef.current = now;
+    refetchRates();
+  }, [isBusy, refetchRates]);
 
   return (
     <div className={css.page}>
@@ -19,27 +53,19 @@ export default function ConverterPage() {
 
       <section className={css.statusBar} aria-label="Network status and actions">
         <NetworkStatus />
-        <Button
-          icon={<RefreshIcon />}
-          aria-label="Refresh exchange rates"
-          onClick={() => refetchRates()}
-          loading={isBusy}
-        >
+        <Button icon={<RefreshIcon />} aria-label="Refresh exchange rates" onClick={safeRefresh} loading={isBusy}>
           Refresh rates
         </Button>
       </section>
 
       <main className={css.layout}>
         <section className={`${css.card} ${css.converter}`} aria-labelledby="converter-heading">
-          <Input label="Amount" />
-          <Currencies />
+          <Input label="Amount" inputMode="decimal" value={amountRaw} onChange={onAmountChange} placeholder="1" />
+          <Currencies from={pair.from} to={pair.to} onChange={onPairChange} />
         </section>
 
         <aside className={`${css.card} ${css.sidebar}`} aria-labelledby="rates-heading">
-          <h2 id="rates-heading" className={css.sectionTitle}>
-            Latest rates
-          </h2>
-          {/* TODO: список/виджет курсов */}
+          333
         </aside>
       </main>
     </div>
