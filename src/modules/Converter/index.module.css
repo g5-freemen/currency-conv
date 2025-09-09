@@ -62,6 +62,9 @@
 }
 
 @media (min-width: 1024px) {
+  .page {
+    justify-content: center;
+  }
   .statusBar {
     justify-content: flex-start;
   }

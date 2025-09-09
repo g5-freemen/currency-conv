@@ -10,7 +10,7 @@ import { dependencies } from './package.json';
 
 const presetChunks = {
   'react-ecosystem-vendor': ['react', 'react-router-dom', 'react-dom'],
-  'utility-vendor': ['lodash', 'clsx'],
+  'utility-vendor': ['lodash', 'clsx', 'react-toastify', 'axios'],
 };
 
 function renderChunks() {
