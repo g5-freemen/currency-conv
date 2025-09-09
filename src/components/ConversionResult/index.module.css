@@ -4,16 +4,15 @@
 }
 
 .title {
-  margin-bottom: 24px;
-  font-size: 18px;
+  margin-bottom: 20px;
+  font-size: 16px; /* mobile */
   font-weight: 600;
 }
 
 .big {
-  font-size: 24px;
+  font-size: clamp(24px, 5vw, 32px);
   font-weight: 700;
   text-align: center;
-
   white-space: normal;
   overflow-wrap: anywhere;
   word-wrap: break-word;
@@ -52,7 +51,7 @@
   padding: 8px 12px;
   font-size: 11px;
   border-radius: 12px;
-  color: #8a8a8a;
+  color: #737373;
   background: #fafafa;
   text-align: center;
 }
@@ -67,5 +66,18 @@
 }
 
 .divider {
-  margin: 24px 0;
+  margin: 12px 0;
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+  .big {
+    font-size: 32px;
+  }
+  .divider {
+    margin: 16px 0;
+  }
 }

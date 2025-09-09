@@ -77,7 +77,13 @@ export default function ConverterPage() {
 
       <main className={css.layout}>
         <section className={clsx(css.card, css.converter)} aria-labelledby="converter-heading">
-          <Input label="Amount" inputMode="decimal" value={amountRaw} onChange={onAmountChange} placeholder="1" />
+          <Input
+            label="Amount"
+            inputMode="decimal"
+            value={amountRaw}
+            onChange={onAmountChange}
+            placeholder="Enter amount..."
+          />
           <Currencies from={pair.from} to={pair.to} onChange={onPairChange} />
         </section>
 

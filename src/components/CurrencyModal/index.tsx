@@ -92,10 +92,12 @@ export const CurrencyModal = ({ open, options, value, onSelect, onClose }: Props
 
         {filtered.map((m, idx) => {
           const selected = value?.toUpperCase() === m.code;
+          const isActive = idx === active;
+
           return (
             <button
               key={m.code}
-              className={clsx(css.row, selected && css.selected)}
+              className={clsx(css.row, selected && css.selected, isActive && css.active)}
               data-idx={idx}
               role="option"
               aria-selected={selected}
