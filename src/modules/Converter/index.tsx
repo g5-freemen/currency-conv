@@ -9,9 +9,10 @@ import { useRates } from '@/api/hooks/useRates';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useConverter } from '@/hooks/useConverter';
 import { LAST_AMOUNT_LS_KEY, LAST_PAIR_LS_KEY, REFRESH_COOLDOWN_MS } from '@/utils/consts';
-import css from './index.module.css';
 import { readPair, sanitizeAmount } from './utils';
 import { useIsOnline } from '@/hooks/useIsOnline';
+import clsx from 'clsx';
+import css from './index.module.css';
 
 export default function ConverterPage() {
   const { isOnline } = useIsOnline();
@@ -75,12 +76,12 @@ export default function ConverterPage() {
       </section>
 
       <main className={css.layout}>
-        <section className={`${css.card} ${css.converter}`} aria-labelledby="converter-heading">
+        <section className={clsx(css.card, css.converter)} aria-labelledby="converter-heading">
           <Input label="Amount" inputMode="decimal" value={amountRaw} onChange={onAmountChange} placeholder="1" />
           <Currencies from={pair.from} to={pair.to} onChange={onPairChange} />
         </section>
 
-        <aside className={`${css.card} ${css.sidebar}`} aria-labelledby="rates-heading">
+        <aside className={css.card} aria-labelledby="rates-heading">
           <ConversionResult
             loading={isBusy}
             amount={amount}

@@ -1,18 +1,30 @@
 .wrap {
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
 
 .title {
+  margin-bottom: 24px;
   font-size: 18px;
   font-weight: 600;
 }
 
 .big {
-  font-size: clamp(24px, 3.2vw, 32px);
+  font-size: 24px;
   font-weight: 700;
-  margin: 6px auto 8px;
+  text-align: center;
+
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.amount {
+  margin: 4px auto 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #737373;
 }
 
 .rates {
@@ -51,10 +63,9 @@
   background: #fff4f4;
   color: #a40000;
   border-radius: 8px;
+  cursor: pointer;
 }
 
-.skeleton {
-  height: 48px;
-  border-radius: 8px;
-  background: #f3f3f3;
+.divider {
+  margin: 24px 0;
 }
